@@ -1,0 +1,9 @@
+canvas{
+    border: 2px solid #c7c8c9;
+    border-radius: 10px;
+    text-align: center;
+}
+#canvasHolder{
+    text-align: center;
+}
+
