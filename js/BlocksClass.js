@@ -1430,7 +1430,7 @@ export default class Block {
             this.x = this.W / 2 //this is the initial value of x in the display    
         }
         if (this.blockType == 3 || this.blockType == 4 || this.blockType == 5) {
-            
+
             this.x = this.W / 2 + this.size //this is the initial value of x in the display 
         }
         if (this.blockType == 7) {
