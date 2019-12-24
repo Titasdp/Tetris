@@ -1,9 +1,35 @@
-canvas{
+canvas#myCanvas{
     border: 2px solid #c7c8c9;
     border-radius: 10px;
     text-align: center;
 }
 #canvasHolder{
+    margin-top: 4%;
     text-align: center;
 }
+
+
+canvas#myCanvas2{
+    border: 2px solid #c7c8c9;
+    border-radius: 10px;
+    text-align: center;
+   
+}
+
+
+canvas#myCanvas3{
+    border: 2px solid #c7c8c9;
+    border-radius: 10px;
+    text-align: center;
+ 
+}
+
+
+canvas#myCanvas4{
+    border: 2px solid #c7c8c9;
+    border-radius: 10px;
+    text-align: center;
+ 
+}
+
 

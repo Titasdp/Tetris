@@ -7,7 +7,7 @@ import SavedSquare from "./SavedClass.js"
 // 5-T 
 
 export default class Block {
-    constructor(takenSquares, blockType, W, H, context) {
+    constructor(takenSquares, blockType, W, H, context, velocity = 80) {
         this.keys = [] //?This array saves the list of keys that have ben press 
         this.size = 30 //?SQUARE dimensions
         this.x = 0
@@ -19,6 +19,9 @@ export default class Block {
         this.saveY = 0 //?this saves the initial value of y
         this.TimeIncreY = 0 //?This serve as an timer , when it arrives at 120 the y value will increment
         this.arrival = false //!!!!!!!!!!!!!!!!!!!!!!!
+
+        this.velocity = velocity // ?velocity that the blocks go down strange fact is that the block goes faster if velocity is smaller
+        this.canSave = 0
 
 
         // *<group of blocks that have been taken
@@ -33,8 +36,6 @@ export default class Block {
         // *<canvas context
         this.context = context
         // *canvas context>
-
-
 
         // *<Block type
         this.blockType = blockType
@@ -86,6 +87,7 @@ export default class Block {
     defineColor() {
         if (this.blockType == 1) {
             this.color = "#E71D36"
+            // 
         } else if (this.blockType == 2) {
             this.color = "#2EC4B6"
         } else if (this.blockType == 3) {
@@ -107,18 +109,14 @@ export default class Block {
 
 
     myKeys() {
-        // console.log(keys);
-
         // !this part makes the  block move left and right 
         if (this.keys[39] == true && this.objRight == false) {
             this.x = this.x + this.size
             this.keys[39] = false
-
         }
         // left
         if (this.keys[37] == true && this.objLeft == false) {
             this.x = this.x - this.size
-
             this.keys[37] = false
         }
         if (this.keys[38] == true && this.formChangeObstacle == false && this.blockType != 6) {
@@ -141,10 +139,15 @@ export default class Block {
                     this.form = 1
                 }
             }
-
-
-
             this.keys[38] = false
+        }
+
+        if (this.keys[40] == true && this.contactUnderY == false) {
+            this.y += this.size
+            this.keys[40] = false
+        }
+        if (this.keys[40] == true && this.contactUnderY == true) {
+            this.canSave = 10
         }
     }
     // * formation of the block
@@ -198,7 +201,6 @@ export default class Block {
             }
 
 
-
             if (this.blockType == 2) {
                 if (i == 0) {
                     this.saveX = this.x
@@ -219,12 +221,12 @@ export default class Block {
             if (this.blockType == 3) {
                 if (i == 0) {
                     //! YOU HAVE TO SAVE THE CENTER DATAS TO USE THEM US REFERENCE IN THE DEVELOPMENT OF THE OTHER PARTS OF THE CANVAS 
-                    this.saveY = this.y //saves the first y value to help on the draw of the next object
+                    this.saveY = this.y
                     this.saveX = this.x
                     this.x = this.x - this.size
                 }
                 if (i == 1) {
-                    this.y = this.y - this.size //increment y so that the second line of squares will be created
+                    this.y = this.y - this.size 
                     this.x = this.x
                 }
                 if (i == 2) {
@@ -241,12 +243,12 @@ export default class Block {
 
                 if (i == 0) {
                     //! YOU HAVE TO SAVE THE CENTER DATAS TO USE THEM US REFERENCE IN THE DEVELOPMENT OF THE OTHER PARTS OF THE CANVAS 
-                    this.saveY = this.y //saves the first y value to help on the draw of the next object
+                    this.saveY = this.y 
                     this.saveX = this.x
                     this.x = this.x + this.size
                 }
                 if (i == 1) {
-                    this.y = this.y - this.size //increment y so that the second line of squares will be created
+                    this.y = this.y - this.size 
                     this.x = this.x
                 }
                 if (i == 2) {
@@ -299,14 +301,6 @@ export default class Block {
             if (this.blockType == 7) {
                 this.x = this.x + this.size
             }
-
-
-
-
-
-
-
-
         }
     }
     //  Second Form
@@ -345,7 +339,7 @@ export default class Block {
                     //! YOU HAVE TO SAVE THE CENTER DATAS TO USE THEM US REFERENCE IN THE DEVELOPMENT OF THE OTHER PARTS OF THE CANVAS 
                     this.saveY = this.y //saves the first y value to help on the draw of the next object
                     this.saveX = this.x
-                    this.y = this.y + this.size
+                    this.y = this.y - this.size
 
                     this.x = this.x
                 }
@@ -355,7 +349,7 @@ export default class Block {
                     this.x -= this.size
                 }
                 if (i == 2) {
-                    this.y -= this.size
+                    this.y += this.size
                 }
 
 
@@ -371,19 +365,15 @@ export default class Block {
                     //! YOU HAVE TO SAVE THE CENTER DATAS TO USE THEM US REFERENCE IN THE DEVELOPMENT OF THE OTHER PARTS OF THE CANVAS 
                     this.saveY = this.y //saves the first y value to help on the draw of the next object
                     this.saveX = this.x
-                    this.y = this.y - this.size
+                    this.y = this.y + this.size
                     this.x = this.x
                 }
-
                 if (i == 1) {
                     this.y = this.saveY
                     this.x -= this.size
-                    // this.y = this.y + this.size
-
                 }
                 if (i == 2) {
-                    // this.y = this.saveY
-                    this.y += this.size
+                    this.y -= this.size
                 }
                 if (i == 3) {
                     this.x = this.saveX
@@ -537,42 +527,32 @@ export default class Block {
                 }
                 if (i == 1) {
                     this.x = this.saveX
-                    this.y = this.y - this.size //increment y so that the second line of squares will be created
+                    this.y = this.y + this.size //increment y so that the second line of squares will be created
 
                 }
                 if (i == 2) {
-                    // this.y = this.saveY
-
                     this.x = this.x + this.size
                 }
                 if (i == 3) {
                     this.y = this.saveY
-
                 }
             }
 
             if (this.blockType == 2) {
                 if (i == 0) {
-                    //! YOU HAVE TO SAVE THE CENTER DATAS TO USE THEM US REFERENCE IN THE DEVELOPMENT OF THE OTHER PARTS OF THE CANVAS 
-                    // this.saveY = this.y //saves the first y value to help on the draw of the next object
                     this.saveX = this.x
-                    this.x -= this.size
+                    this.x += this.size
                 }
                 if (i == 1) {
                     this.x = this.saveX
-                    this.y = this.y - this.size //increment y so that the second line of squares will be created
-
+                    this.y += this.size //increment y so that the second line of squares will be created
                 }
                 if (i == 2) {
-                    // this.y = this.saveY
-
-                    this.x += this.size
+                    this.x = this.x - this.size
                 }
                 if (i == 3) {
                     this.y = this.saveY
-
                 }
-
             }
 
 
@@ -592,8 +572,6 @@ export default class Block {
                     this.x = this.saveX
                     this.x = this.x - this.size
                 }
-                // this.x = this.x
-
             }
 
 
@@ -626,8 +604,6 @@ export default class Block {
                     this.saveY = this.y //saves the first y value to help on the draw of the next object
                     this.saveX = this.x
                     this.y = this.y + this.size //increment y so that the second line of squares will be created
-
-
                 }
 
                 if (i == 1) {
@@ -639,8 +615,6 @@ export default class Block {
                     this.x = this.saveX
                     this.x = this.x - this.size
                 }
-
-
 
             }
 
@@ -692,15 +666,11 @@ export default class Block {
 
                 if (i == 1) {
                     this.y = this.saveY
-                    this.x += this.size
-                    // this.y = this.y + this.size
-
+                    this.x -= this.size
                 }
                 if (i == 2) {
-                    // this.y = this.saveY
                     this.y += this.size
                 }
-
 
                 if (i == 3) {
                     this.x = this.saveX
@@ -712,25 +682,20 @@ export default class Block {
 
                 if (i == 0) {
                     //! YOU HAVE TO SAVE THE CENTER DATAS TO USE THEM US REFERENCE IN THE DEVELOPMENT OF THE OTHER PARTS OF THE CANVAS 
-                    this.saveY = this.y //saves the first y value to help on the draw of the next object
+                    this.saveY = this.y
                     this.saveX = this.x
                     this.y = this.y + this.size
-
                     this.x = this.x
                 }
 
                 if (i == 1) {
                     this.y = this.saveY
-                    this.x += this.size
-                    // this.y = this.y + this.size
-
+                    this.x -= this.size
                 }
                 if (i == 2) {
-                    // this.y = this.saveY
+
                     this.y -= this.size
                 }
-
-
                 if (i == 3) {
                     this.x = this.saveX
                     this.y = this.saveY
@@ -791,7 +756,6 @@ export default class Block {
                 if (i == 3) {
                     this.y = this.saveY
                 }
-
             }
 
 
@@ -882,9 +846,7 @@ export default class Block {
                 if (i == 2) {
                     X -= this.size
                 }
-                if (i == 3) {
-                    Y = saveY
-                }
+
 
             }
 
@@ -974,7 +936,7 @@ export default class Block {
                     //! YOU HAVE TO SAVE THE CENTER DATAS TO USE THEM US REFERENCE IN THE DEVELOPMENT OF THE OTHER PARTS OF THE CANVAS 
                     saveY = Y //saves the first y value to help on the draw of the next object
                     saveX = X
-                    Y += this.size
+                    Y -= this.size
 
                     X = X
                 }
@@ -987,12 +949,9 @@ export default class Block {
                 }
                 if (i == 2) {
                     // this.y = this.saveY
-                    Y -= this.size
+                    Y += this.size
                 }
-                if (i == 3) {
-                    X = this.saveX
-                    Y = saveY
-                }
+
             }
 
             if (this.blockType == 2) {
@@ -1000,24 +959,16 @@ export default class Block {
                     //! YOU HAVE TO SAVE THE CENTER DATAS TO USE THEM US REFERENCE IN THE DEVELOPMENT OF THE OTHER PARTS OF THE CANVAS 
                     saveY = Y //saves the first y value to help on the draw of the next object
                     saveX = X
-                    Y -= this.size
-
+                    Y += this.size
                     X = X
                 }
 
                 if (i == 1) {
                     Y = saveY
                     X -= this.size
-                    // this.y = this.y + this.size
-
                 }
                 if (i == 2) {
-                    // this.y = this.saveY
-                    Y += this.size
-                }
-                if (i == 3) {
-                    X = this.saveX
-                    Y = saveY
+                    Y -= this.size
                 }
             }
 
@@ -1124,30 +1075,34 @@ export default class Block {
             if (this.blockType == 1) {
                 if (i == 0) {
                     //! YOU HAVE TO SAVE THE CENTER DATAS TO USE THEM US REFERENCE IN THE DEVELOPMENT OF THE OTHER PARTS OF THE CANVAS 
+                    // this.saveY = this.y //saves the first y value to help on the draw of the next object
                     saveX = X
-                    X += this.size
+                    X -= this.size
                 }
                 if (i == 1) {
                     X = saveX
-                    Y -= this.size
+                    Y = Y + this.size //increment y so that the second line of squares will be created
+
                 }
                 if (i == 2) {
-                    X -= this.size
+                    X += this.size
                 }
             }
 
             if (this.blockType == 2) {
                 if (i == 0) {
                     //! YOU HAVE TO SAVE THE CENTER DATAS TO USE THEM US REFERENCE IN THE DEVELOPMENT OF THE OTHER PARTS OF THE CANVAS 
+                    // this.saveY = this.y //saves the first y value to help on the draw of the next object
                     saveX = X
-                    X -= this.size
+                    X += this.size
                 }
                 if (i == 1) {
                     X = saveX
-                    Y -= this.size
+                    Y = Y + this.size //increment y so that the second line of squares will be created
+
                 }
                 if (i == 2) {
-                    X += this.size
+                    X -= this.size
                 }
 
             }
@@ -1194,8 +1149,6 @@ export default class Block {
             }
 
 
-
-
             if (this.blockType == 5) {
                 if (i == 0) {
                     saveY = Y //saves the first y value to help on the draw of the next object
@@ -1213,9 +1166,6 @@ export default class Block {
                     X = saveX
                     X = X - this.size
                 }
-
-
-
             }
 
             if (this.blockType == 7) {
@@ -1237,22 +1187,20 @@ export default class Block {
             if (this.blockType == 1) {
                 if (i == 0) {
                     //! YOU HAVE TO SAVE THE CENTER DATAS TO USE THEM US REFERENCE IN THE DEVELOPMENT OF THE OTHER PARTS OF THE CANVAS 
-                    saveY = Y //saves the first y value to help on the draw of the next object
+                    saveY = Y
                     saveX = X
                     Y -= this.size
-
                     X = X
                 }
 
                 if (i == 1) {
                     Y = saveY
-                    X += this.size
+                    X -= this.size
                 }
                 if (i == 2) {
-
                     Y += this.size
                 }
-                // X = X
+
 
             }
 
@@ -1263,16 +1211,14 @@ export default class Block {
                     saveY = Y //saves the first y value to help on the draw of the next object
                     saveX = X
                     Y += this.size
-
                     X = X
                 }
 
                 if (i == 1) {
                     Y = saveY
-                    X += this.size
+                    X -= this.size
                 }
                 if (i == 2) {
-
                     Y -= this.size
                 }
 
@@ -1362,19 +1308,20 @@ export default class Block {
     // *<updates de  position of the block that is been display
     updatePosition() {
         this.x = this.saveX
-
-
-        //! this part of the code increment the "y" 130
-        if (this.TimeIncreY == 50) {
-            this.y = this.y + this.size
-            this.TimeIncreY = 0
-        } else {
-            this.TimeIncreY++
+        if (this.contactUnderY != true) {
+            //! this part of the code increment the "y" 130
+            if (this.TimeIncreY == this.velocity) {
+                this.y = this.y + this.size
+                this.TimeIncreY = 0
+            } else {
+                this.TimeIncreY++
+            }
         }
-        // console.log(this.blockLimitY);
+
+
 
         // !this part will analyze if the object has found the bottom of the canvas 
-        if (this.contactUnderY == true) {
+        if (this.contactUnderY == true && this.canSave == 10) {
             for (let i = 0; i < this.displayedPositions.length; i++) {
 
                 if (i % 2 == 0) {
@@ -1382,6 +1329,9 @@ export default class Block {
                 }
             }
             this.arrival = true
+        } else if (this.contactUnderY == true && this.canSave != 10) {
+            this.canSave++
+            this.displayedPositions = []
         } else {
             this.displayedPositions = []
         }
@@ -1392,11 +1342,6 @@ export default class Block {
 
     // *<updates block formation
     updateFormation() {
-        // if (this.blockType == 1 || this.blockType == 2 || this.blockType == 3 || this.blockType == 4 || this.blockType == 5 || this.blockType == 6) {
-
-        // }
-
-
         if (this.form == 1) {
             this.composeBlock1()
         } else if (this.form == 2) {
@@ -1475,14 +1420,10 @@ export default class Block {
      * * *completed
      */
     drawBlock(x, size, y, color, strokeColor) {
-        this.context.beginPath();
         this.context.fillStyle = color;
         this.context.strokeStyle = strokeColor;
         this.context.fillRect(x - size, y, size, size);
         this.context.strokeRect(x - size, y, size, size);
-        this.context.fill();
-        this.context.stroke()
-        this.context.closePath();
     }
 
 
@@ -1560,14 +1501,20 @@ export default class Block {
         }
         if ((X) < 0) {
             return true
-        } else if ((X + size) > this.W) {
+        } else if ((X + size) > this.W || Y < 0) {
+            return true
+        } else if (Y > this.H) {
             return true
         }
         return false
     }
 
+
+    /**
+     * returns all the squares that has been taken
+     */
+
     returnTakenSquares() {
         return this.takenSquares
     }
-
 }
