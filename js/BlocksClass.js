@@ -8,20 +8,19 @@ import SavedSquare from "./SavedClass.js"
 
 export default class Block {
     constructor(takenSquares, blockType, W, H, context, velocity = 80) {
-        this.keys = [] //?This array saves the list of keys that have ben press 
-        this.size = 30 //?SQUARE dimensions
+        this.keys = [] //This array saves the list of keys that have ben press 
+        this.size = 30 //SQUARE dimensions
         this.x = 0
         this.y = 0
 
-        this.start = true //?This variable sees if it is the first time that the block appears 
+        this.start = true //This variable sees if it is the first time that the block appears 
 
-        this.saveX = 0; //?this saves the initial value of increment x 
-        this.saveY = 0 //?this saves the initial value of y
-        this.TimeIncreY = 0 //?This serve as an timer , when it arrives at 120 the y value will increment
-        this.arrival = false //!!!!!!!!!!!!!!!!!!!!!!!
-
+        this.saveX = 0; //this saves the initial value of  x during the creation of a form of an Block
+        this.saveY = 0 //this saves the initial value of y during the creation of a form of an Block
+        this.TimeIncreY = 0 //This serve as an timer , when this time  == to  the velocity  of the block the block will have an increment in Y axes  
+        this.arrival = false // tels the system that the block has arrived
         this.velocity = velocity // ?velocity that the blocks go down strange fact is that the block goes faster if velocity is smaller
-        this.canSave = 0
+        this.canSave = 0 // ?this variable confirms if the system can save the block in the group of taken blocks or not
 
 
         // *<group of blocks that have been taken
@@ -43,8 +42,8 @@ export default class Block {
 
 
         // *<display formate
-        this.form = 1
-        this.formChangeObstacle = false
+        this.form = 1 //tels to the system the formate of the object that is being displayed takes, it can have 1 to 4  forms of display  
+        this.formChangeObstacle = false // confirms to the system if the block can be changed his format or not
         // *display formate>
 
         // *<style
@@ -53,17 +52,17 @@ export default class Block {
         // *style>
 
         // *<displayPositions
-        this.displayedPositions = [] //?Saves all the display squares  that compose on piece 
+        this.displayedPositions = [] //Saves all the Xs and Ys of the object that is being displayed 
         //*displayPositions>
 
         // *<limits
-        this.objRight = false
-        this.objLeft = false
-        this.contactUnderY = false
+        this.objRight = false // confirms if the displayed object  has an obstacle at his right
+        this.objLeft = false // confirms if the displayed object  has an obstacle at his left
+        this.contactUnderY = false //confirms if the block that is being displayed has found an obstacle under him
         // *limits>
     }
     display() {
-        // !this part of the code sees if it is the first time that the block is falling  
+
         this.myKeys()
         this.defineColor()
         //********<this is important 
@@ -83,7 +82,10 @@ export default class Block {
         //*********this is important>
     }
 
-
+    /**
+     * this function focus in the block type that is being displayed to define his color
+     * *completed
+     */
     defineColor() {
         if (this.blockType == 1) {
             this.color = "#E71D36"
@@ -107,18 +109,22 @@ export default class Block {
 
 
 
-
+    /**
+     * this function confirms the keys that are pressed and activate a functionality  
+     * *completed 
+     */
     myKeys() {
-        // !this part makes the  block move left and right 
+        // * confirms if there is an object right and if the right key is pressed to move the displayed peace right   
         if (this.keys[39] == true && this.objRight == false) {
             this.x = this.x + this.size
             this.keys[39] = false
         }
-        // left
+        // * confirms if there is an object left and if the left key is pressed to move the displayed peace left
         if (this.keys[37] == true && this.objLeft == false) {
             this.x = this.x - this.size
             this.keys[37] = false
         }
+        // * confirms if there a possibility to change an obj form and if the up arrow key is pressed to change the displayed peace formate 
         if (this.keys[38] == true && this.formChangeObstacle == false && this.blockType != 6) {
             if (this.blockType != 7) {
                 if (this.form == 1) {
@@ -142,16 +148,28 @@ export default class Block {
             this.keys[38] = false
         }
 
+
+
+        //*confirms if the peace can be moved faster in the Y axes (it goes faster if there is no objects under and if the user press the down arrow  key)
         if (this.keys[40] == true && this.contactUnderY == false) {
             this.y += this.size
             this.keys[40] = false
         }
+        //*confirms if the peace can "seat" faster in the Y axes (it "seats"  the peace  if there is no objects under and if the user press the down arrow  key)
         if (this.keys[40] == true && this.contactUnderY == true) {
             this.canSave = 10
         }
     }
-    // * formation of the block
-    //  first Form
+
+
+
+
+
+
+
+
+    // ***********this group of functions construct and fallen object based on the object type an the form of the object***********
+    // first form
     composeBlock1() {
         this.contactUnderY = false
         this.objRight = false
@@ -182,7 +200,6 @@ export default class Block {
             if (this.blockType == 1) {
                 if (i == 0) {
                     //! YOU HAVE TO SAVE THE CENTER DATAS TO USE THEM US REFERENCE IN THE DEVELOPMENT OF THE OTHER PARTS OF THE CANVAS 
-                    // this.saveY = this.y //saves the first y value to help on the draw of the next object
                     this.saveX = this.x
                     this.x = this.x - this.size
                 }
@@ -226,7 +243,7 @@ export default class Block {
                     this.x = this.x - this.size
                 }
                 if (i == 1) {
-                    this.y = this.y - this.size 
+                    this.y = this.y - this.size
                     this.x = this.x
                 }
                 if (i == 2) {
@@ -243,12 +260,12 @@ export default class Block {
 
                 if (i == 0) {
                     //! YOU HAVE TO SAVE THE CENTER DATAS TO USE THEM US REFERENCE IN THE DEVELOPMENT OF THE OTHER PARTS OF THE CANVAS 
-                    this.saveY = this.y 
+                    this.saveY = this.y
                     this.saveX = this.x
                     this.x = this.x + this.size
                 }
                 if (i == 1) {
-                    this.y = this.y - this.size 
+                    this.y = this.y - this.size
                     this.x = this.x
                 }
                 if (i == 2) {
@@ -730,11 +747,8 @@ export default class Block {
 
 
             if (this.blockType == 4) {
-
-
                 if (i == 0) {
-                    //! YOU HAVE TO SAVE THE CENTER DATAS TO USE THEM US REFERENCE IN THE DEVELOPMENT OF THE OTHER PARTS OF THE CANVAS 
-                    this.saveY = this.y //saves the first y value to help on the draw of the next object
+                    this.saveY = this.y
                     this.saveX = this.x
                     this.y = this.y - this.size
 
@@ -743,8 +757,6 @@ export default class Block {
 
                 if (i == 1) {
                     this.x -= this.size
-                    // this.y = this.y + this.size
-
                 }
                 if (i == 2) {
                     this.y = this.saveY
@@ -764,8 +776,7 @@ export default class Block {
             if (this.blockType == 5) {
 
                 if (i == 0) {
-                    //! YOU HAVE TO SAVE THE CENTER DATA TO USE THEM US REFERENCE IN THE DEVELOPMENT OF THE OTHER PARTS OF THE CANVAS 
-                    this.saveY = this.y //saves the first y value to help on the draw of the next object
+                    this.saveY = this.y
                     this.saveX = this.x
                     this.x = this.x - this.size
                 }
@@ -785,22 +796,15 @@ export default class Block {
 
             }
 
-            if (this.blockType == 6) {
-
-
-
-
-            }
-
         }
 
     }
 
-    // ************************
+    // ***************************************************************************************************************************
 
 
 
-    // !Essas funções recriam a possibilidade do utilizador querer realizar uma alteracao no formato do objeto e procura osbtrucoes 
+    // ***********this group of functions recreated an "hologram" / "representation" of the future form of and peace and looks for obstruction that can happen in the system if the user wants to change then form of an object that is falling and send an alert to the system to deny future transformation***********
     confTransition1(X, Y) {
         this.formChangeObstacle = false
         let saveY = 0
@@ -833,14 +837,13 @@ export default class Block {
 
             if (this.blockType == 2) {
                 if (i == 0) {
-                    //! YOU HAVE TO SAVE THE CENTER DATAS TO USE THEM US REFERENCE IN THE DEVELOPMENT OF THE OTHER PARTS OF THE CANVAS 
-                    // this.saveY = this.y //saves the first y value to help on the draw of the next object
+
                     saveX = X
                     X += this.size
                 }
                 if (i == 1) {
                     X = saveX
-                    Y = Y + this.size //increment y so that the second line of squares will be created
+                    Y = Y + this.size
 
                 }
                 if (i == 2) {
@@ -853,7 +856,7 @@ export default class Block {
             if (this.blockType == 3) {
                 if (i == 0) {
                     //! YOU HAVE TO SAVE THE CENTER DATAS TO USE THEM US REFERENCE IN THE DEVELOPMENT OF THE OTHER PARTS OF THE CANVAS 
-                    saveY = Y //saves the first y value to help on the draw of the next object
+                    saveY = Y
                     saveX = X
                     X = X - this.size
                 }
@@ -1303,6 +1306,7 @@ export default class Block {
 
         }
     }
+    // ****************************************************************************************************************************************************************************************************************************************************************************************************************
 
 
     // *<updates de  position of the block that is been display
@@ -1320,7 +1324,7 @@ export default class Block {
 
 
 
-        // !this part will analyze if the object has found the bottom of the canvas 
+        // !this part will analyze if the object has found the bottom of the canvas and if the  object can yet be saved in group of the blocks tha has been taken
         if (this.contactUnderY == true && this.canSave == 10) {
             for (let i = 0; i < this.displayedPositions.length; i++) {
 
@@ -1352,6 +1356,8 @@ export default class Block {
             this.composeBlock4()
         }
     }
+
+
     // *updates block formation>
     /**
      * function that draws the blocks
@@ -1364,6 +1370,8 @@ export default class Block {
             }
         }
     }
+
+
 
     /**
      * function that formate the variables in the start of the display of the block
@@ -1387,12 +1395,17 @@ export default class Block {
     }
 
     /**
-     * that get the keys pressed by the players  and set them in the class  
+     * function that gets the keys pressed by the players and set them in the class  
      * *completed
      */
     setKeys(keys) {
         this.keys = keys
     }
+
+
+    /**
+     * function that informs the system if the block that is being displayed has arrived 
+     */
     returnArrival() {
         if (this.arrival == false) {
             return false
@@ -1401,7 +1414,7 @@ export default class Block {
         }
     }
 
-    // !!!!!!!!!!!!!!!!!!!New 
+
     /**
      *Function that saves all the filled positions and their specific color  
      * @param {number} x This is the position that has been taken (x)  
@@ -1416,7 +1429,7 @@ export default class Block {
 
 
     /**
-     * this function main focus is tho draw the current block
+     * function that  draws the current block
      * * *completed
      */
     drawBlock(x, size, y, color, strokeColor) {
@@ -1511,7 +1524,7 @@ export default class Block {
 
 
     /**
-     * returns all the squares that has been taken
+     * returns all the squares that has been taken updated or not
      */
 
     returnTakenSquares() {

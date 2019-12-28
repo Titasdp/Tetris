@@ -1,30 +1,34 @@
 import Block from "./BlocksClass.js"
 
+// <gets the main canvas and give it a context
 const canvas = document.querySelector("#myCanvas");
 const context = canvas.getContext("2d");
+// gets the main canvas and give it a context>
 
+
+// <this canvas has the principal function of displaying the next block that is going to be displayed
 const canvas2 = document.querySelector("#myCanvas2");
 const context2 = canvas2.getContext("2d");
+// this canvas has the principal function of displaying the next block that is going to be displayed>
 
 
-
+// <this canvas shows the block that is being held 
 const canvas3 = document.querySelector("#myCanvas3");
 const context3 = canvas3.getContext("2d");
+// this canvas shows the block that is being held >
 
 
+// <this canvas exists so that the player can be aware of his points,  current level  and the highest score 
 const canvas4 = document.querySelector("#myCanvas4");
 const context4 = canvas4.getContext("2d");
-
-
-canvas2.style.backgroundColor = "black"
-canvas3.style.backgroundColor = "black"
+// this canvas exists so that the player can be aware of his points,  current level  and the highest score>
 
 
 //add to the window this 2 events  
 window.addEventListener('keydown', ArrowPressed);
 window.addEventListener('keyup', ArrowReleased);
 
-// canvas width and canvas height 
+// <all the canvas  width and height 
 let H = canvas.height
 let W = canvas.width
 
@@ -36,42 +40,45 @@ let H3 = canvas3.height
 
 let W4 = canvas4.width
 let H4 = canvas4.height
+// all the canvas  width and height>
 
-// myTetris loop control
-let proceed = true
+
+let proceed = true // variable that controls if the game is over or not, obs : it is over when "proceed ==false" 
 
 
 // player focus 
-let points = 0
-let level = 1
-let velocity = 80
-let heightScore = 0
+let points = 0 // Player points 
+let level = 1 //current level
+let velocity = 80 // Actually this is the  the "time" that the block takes to move in the y axis 
+let heightScore = 0 //the highest score  
 
 
-
+//  if there is already a highest scored in the system it fetches that score
 if (JSON.parse(localStorage.getItem("hightScore"))) {
     heightScore = JSON.parse(localStorage.getItem("hightScore"))
 }
 
 // held block type
-let held = 0
-let comingFromHeld = false
+let held = 0 // Saves the number that represents the type of the block that is being held 
+let comingFromHeld = false //informs the system that the blocks that is going to be displayed was held up 
 
 
 //!Initial variables
 let keys = [] //?This array saves the list of keys that have ben press 
 export let takenSquares = [] //?this array  saves all the positions that have been taken 
-let displayOBlock = []
-let canDisplay = true
+let displayOBlock = [] //this array saves the info related to the block that is being displayed
+let canDisplay = true // informs the system if the next block can be displayed or not 
 
-let random = 0
-let random2 = 0
-
+let random = 0 //variable that saves the number that represents the block that is being displayed(1-10 [1-zBlock, 2 -sBlock, 3-LBlock(inverted), 4-LBlock , 5-TBlock, 6-OBlock,7-IBlock])  
+let random2 = 0 //variable that saves the number that represents the next block that is going to be displayed(1-10 [1-zBlock, 2 -sBlock, 3-LBlock(inverted), 4-LBlock , 5-TBlock, 6-OBlock,7-IBlock]) 
 
 canvasStyle()
 myTetris()
+
+
+
 /**
- * This function builds the canvas backGround (it also serve as a "clearRect")
+ * This function builds the canvas backGround (it also serve to clear the canvas)
  * //*This is complete 
  */
 function canvasStyle() {
@@ -90,6 +97,11 @@ function canvasStyle() {
     context.closePath();
 }
 
+
+/**
+ * function that stylized the canvas that shows the held block
+ * //*this is complete
+ */
 function holdCanvasStyle() {
 
     context3.fillStyle = "black";
@@ -106,7 +118,10 @@ function holdCanvasStyle() {
 
 }
 
-
+/**
+ * function that stylized the canvas that shows next block that is going to be displayed 
+ * //*this is complete
+ */
 function nextCanvasStyle() {
     context2.fillStyle = "black";
     context2.fillRect(0, 0, W2, H2);
@@ -121,7 +136,10 @@ function nextCanvasStyle() {
     context2.fillText("NEXT BLOCK", W2 / 2, 20);
 }
 
-
+/**
+ * function that stylized the canvas that shows next block that is going to be displayed 
+ * //*this is complete
+ */
 function playerCanvasStyle() {
     context4.fillStyle = "black"
     context4.fillRect(0, 0, W4, H4);
@@ -171,9 +189,8 @@ function playerCanvasStyle() {
 }
 // *************************under construction******************************
 /**
- * This function focus on creating the o block peace
- * //*This is  in development 
- * //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! 
+ * this is the main function function that controls the progress of the game
+ * //*This function is completed  
  */
 
 
@@ -197,10 +214,11 @@ function myTetris() {
 
         if (comingFromHeld == false) {
             random2 = Math.floor(Math.random() * 7) + 1; // returns a random integer from 1 to 7
+
         } else {
             comingFromHeld = false
         }
-        displayOBlock.push(new Block(takenSquares, random, W, H, context, velocity))
+        displayOBlock.push(new Block(takenSquares, random, W, H, context, velocity)) // it is here that the block that is being displayed is going to be created an all the functions that are related to that block
     }
     playerCanvasStyle()
     printNextBlock()
@@ -276,11 +294,15 @@ function ArrowPressed(e) {
     }
 }
 
+
+
+
+
+
 /**
- * this functions shows the user the next BLOCK that is going to fall , by printing it in the second canvas
+ * this functions shows the user the next BLOCK that is going to fall , by printing it 
  * *completed * (unconfirmed)
  */
-
 function printNextBlock() {
 
     nextCanvasStyle()
@@ -426,9 +448,8 @@ function printNextBlock() {
     }
 }
 
-
 /**
- * function that is focused on saving a peace for future use and releasing the saved peace 
+ * function that is focused on saving a peace (block) for future use and also releasing the saved peace  
  */
 function hold() {
     if (keys[67] == true) {
@@ -626,6 +647,12 @@ function fillTaken() {
 }
 
 // *********************Functions focused in deleting a completed row*******************************
+
+
+/**
+ * function that confirms all the rows that has been completed
+ * *completed
+ */
 function isRowCompleted() {
 
     let count = 0
@@ -666,6 +693,12 @@ function isRowCompleted() {
 
 }
 
+
+/**
+ * Function that delete a row based on the y value 
+ * @param {Array} completed saves all the y values here the row is already completed so it can be deleted
+ * *completed
+ */
 function clearRow(completed) {
     completed.sort()
     alert(completed.length)
@@ -679,6 +712,14 @@ function clearRow(completed) {
     fallDown(completed)
 }
 
+
+
+
+/**
+ * function that makes  the blokes that are on top of a row that is being deleted "fall down"
+ * @param {Array} completed saves all the y values here the row is already completed so it can be deleted
+ * *completed
+ */
 function fallDown(completed) {
 
     for (let i = 0; i < completed.length; i++) {
@@ -696,7 +737,7 @@ function fallDown(completed) {
 
 
 /**
- * function that confirms if the user have lost
+ * function that confirms if the user has lost the game
  */
 function didLose() {
     let size = 30
@@ -709,7 +750,9 @@ function didLose() {
 }
 
 
-
+/**
+ * function that defines de level  and the time that the block takes to move in Y axes ("velocity" )  based on the number of points that the user has 
+ */
 function levelAndVelocityByPoints() {
 
     if (points <= 1000) {

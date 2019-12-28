@@ -1,4 +1,4 @@
-//!our class this will soon be implemented in an other file 
+//!Future implementation  (please buy our future DLC)
 class User {
     constructor(name = "unknown", points = 0) {
         this.name = name
