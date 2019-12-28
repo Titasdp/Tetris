@@ -73,17 +73,15 @@ myTetris()
  */
 function canvasStyle() {
     let size = 30
-    context.beginPath();
+
+    context.fillStyle = 'black';
+    context.fillRect(0, 0, W, H);
     for (let i = 0; i < 10; i++) {
         for (let j = 0; j < 20; j++) {
             context.strokeStyle = '#f3f3f3f3';
-            context.fillStyle = 'black';
-            context.rect(i * size, j * size, size, size);
+            context.strokeRect(i * size, j * size, size, size);
         }
     }
-    context.fill();
-    context.stroke()
-    context.closePath();
 }
 
 /**
