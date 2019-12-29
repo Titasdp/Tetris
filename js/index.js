@@ -74,10 +74,11 @@ myTetris()
 function canvasStyle() {
     let size = 30
 
-    context.fillStyle = 'black';
+    context.fillStyle = '#1c1c1c';
     context.fillRect(0, 0, W, H);
     for (let i = 0; i < 10; i++) {
         for (let j = 0; j < 20; j++) {
+            context.lineWidth = .8;
             context.strokeStyle = '#f3f3f3f3';
             context.strokeRect(i * size, j * size, size, size);
         }
