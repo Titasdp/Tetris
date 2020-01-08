@@ -28,7 +28,7 @@ body {
   -webkit-background-clip: text;
   -webkit-text-fill-color: rgba(255, 255, 255, 0.01);
   -webkit-animation: textAnimation 4s linear infinite;
-  animation: textAnimation 4s linear infinite;
+          animation: textAnimation 4s linear infinite;
 }
 
 .animation .container .row.svg {
@@ -43,9 +43,9 @@ body {
   width: 150px;
   height: 150px;
   -webkit-animation: rotate 3s linear infinite;
-  animation: rotate 3s linear infinite;
+          animation: rotate 3s linear infinite;
   -webkit-animation-delay: 1s;
-  animation-delay: 1s;
+          animation-delay: 1s;
   opacity: 0;
 }
 
@@ -57,14 +57,14 @@ body {
   stroke: rgba(255, 255, 255, 0.9);
   stroke-linecap: round;
   -webkit-transform: translate(5px, 5px);
-  transform: translate(5px, 5px);
+          transform: translate(5px, 5px);
   stroke-dasharray: 300;
   stroke-dashoffset: 200;
 }
 
 .animation .container .row.svg h4 {
   -webkit-animation: hiddenShow 0s 1s forwards;
-  animation: hiddenShow 0s 1s forwards;
+          animation: hiddenShow 0s 1s forwards;
   visibility: hidden;
   color: #fff;
 }
@@ -80,7 +80,7 @@ body {
   -webkit-transition: width 1s ease-in-out;
   transition: width 1s ease-in-out;
   -webkit-transition-delay: 2s;
-  transition-delay: 2s;
+          transition-delay: 2s;
 }
 
 .animation .container .row.text .grow {
@@ -97,7 +97,6 @@ body {
     opacity: 0;
     visibility: visible;
   }
-
   100% {
     opacity: 1;
     visibility: visible;
@@ -109,7 +108,6 @@ body {
     opacity: 0;
     visibility: visible;
   }
-
   100% {
     opacity: 1;
     visibility: visible;
@@ -120,7 +118,6 @@ body {
   0% {
     background-position: -500%;
   }
-
   100% {
     background-position: 500%;
   }
@@ -130,7 +127,6 @@ body {
   0% {
     background-position: -500%;
   }
-
   100% {
     background-position: 500%;
   }
@@ -140,13 +136,12 @@ body {
   0% {
     opacity: 1;
     -webkit-transform: rotate(0deg);
-    transform: rotate(0deg);
+            transform: rotate(0deg);
   }
-
   100% {
     opacity: 1;
     -webkit-transform: rotate(360deg);
-    transform: rotate(360deg);
+            transform: rotate(360deg);
   }
 }
 
@@ -154,13 +149,12 @@ body {
   0% {
     opacity: 1;
     -webkit-transform: rotate(0deg);
-    transform: rotate(0deg);
+            transform: rotate(0deg);
   }
-
   100% {
     opacity: 1;
     -webkit-transform: rotate(360deg);
-    transform: rotate(360deg);
+            transform: rotate(360deg);
   }
 }
 
@@ -170,13 +164,11 @@ body {
     stroke-dashoffset: 250%;
     stroke: #E71D36;
   }
-
   50% {
     opacity: 0.8;
     stroke-dashoffset: 50%;
     stroke: #388659;
   }
-
   100% {
     opacity: 0.5;
     stroke-dashoffset: 50%;
@@ -190,18 +182,15 @@ body {
     stroke-dashoffset: 250%;
     stroke: #E71D36;
   }
-
   50% {
     opacity: 0.8;
     stroke-dashoffset: 50%;
     stroke: #388659;
   }
-
   100% {
     opacity: 0.5;
     stroke-dashoffset: 50%;
     stroke: #05B2DC;
   }
 }
-
 /*# sourceMappingURL=loadingScreen.css.map */

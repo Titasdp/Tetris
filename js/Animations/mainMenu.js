@@ -1,4 +1,4 @@
-let container = document.querySelector('.container')
+let container = document.querySelector('.animation')
 let btnDiv = document.querySelectorAll('.text-center')
 
 container.addEventListener('mousemove', e => {
