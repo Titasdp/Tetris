@@ -42,6 +42,7 @@ nav {
 .container.aboutUs {
     height: 100vh;
     width: 100vw;
+
     .card {
         color: map-get($colors, font-color);
         background-color: transparent !important;
